@@ -19,26 +19,29 @@ function checkRequiredFields() {
     requiredFields.forEach(function (fieldName) {
         var $field = jQuery('#' + fieldName);
         var fieldValue = $field.val();
-        var $wrapper = $field.closest('.cf-field');
-        if ($field.hasClass('cf-media-gallery__browse')) {
-            fieldValue = $wrapper.find('.cf-media-gallery__item').length;
-        }
-        if (!fieldValue) {
-            var $wrapperGroup = $field.closest('.cf-complex__group');
-            var title = $wrapper.find('.cf-field__label').text();
-            title = '<strong>' + title + '</strong>';
-            if ($wrapperGroup.length > 0) {
-                var wrapperGroupIndex = $wrapperGroup.index();
-                var $cfBody = $wrapperGroup.closest('.cf-field__body');
-                var $tab = $cfBody.find('.cf-complex__tabs').eq(0).find('.cf-complex__tabs-item').eq(wrapperGroupIndex);
-                if ($tab.length > 0) {
-                    var tabName = $tab.text();
-                    title = '<em>' + tabName + ' [#' + (wrapperGroupIndex + 1) + ']</em> ' + title;
-                }
+        var $wrapper = $field.closest('.cf-field').not('[hidden]');
+        if($wrapper.length > 0){
+            if ($field.hasClass('cf-media-gallery__browse')) {
+                fieldValue = $wrapper.find('.cf-media-gallery__item').length;
             }
-            var html = title;
-            missingFields.push(html);
+            if (!fieldValue) {
+                var $wrapperGroup = $field.closest('.cf-complex__group');
+                var title = $wrapper.find('.cf-field__label').text();
+                title = '<strong>' + title + '</strong>';
+                if ($wrapperGroup.length > 0) {
+                    var wrapperGroupIndex = $wrapperGroup.index();
+                    var $cfBody = $wrapperGroup.closest('.cf-field__body');
+                    var $tab = $cfBody.find('.cf-complex__tabs').eq(0).find('.cf-complex__tabs-item').eq(wrapperGroupIndex);
+                    if ($tab.length > 0) {
+                        var tabName = $tab.text();
+                        title = '<em>' + tabName + ' [#' + (wrapperGroupIndex + 1) + ']</em> ' + title;
+                    }
+                }
+                var html = title;
+                missingFields.push(html);
+            }
         }
+
     });
 
     if (missingFields.length > 0) {

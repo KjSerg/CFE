@@ -18,7 +18,7 @@ function cfe_scripts() {
 	if ( $google_recaptcha_site_key && $google_recaptcha_secret_key ) {
 		wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $google_recaptcha_site_key, array(), '', true );
 	}
-	
+
 	wp_enqueue_script( 'cfe-scripts', CFE__ASSETS_URL . '/js/cfe.js', array(), '1.0', true );
 
 	wp_localize_script( 'ajax-script', 'AJAX', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
@@ -34,4 +34,4 @@ function cfe_enqueue_admin_scripts() {
 
 }
 
-//add_action( 'admin_enqueue_scripts', 'cfe_enqueue_admin_scripts' );
+add_action( 'admin_enqueue_scripts', 'cfe_enqueue_admin_scripts' );
