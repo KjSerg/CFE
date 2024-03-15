@@ -27,6 +27,12 @@ function crb_cfe_attach_theme_options() {
 			                   ->set_help_text( 'The word is in Latin without spaces.' )->set_required( true )->set_attribute( 'pattern', '^[a-z]+$' ),
 		              ) ),
 	         ) );
+	Container::make( 'theme_options', "Google recaptcha" )
+	         ->set_page_parent( 'edit.php?post_type=contact_form' )
+	         ->add_fields( array(
+		         Field::make( "text", "google_recaptcha_site_key" ),
+		         Field::make( "text", "google_recaptcha_secret_key" ),
+	         ) );
 }
 
 add_action( 'carbon_fields_register_fields', 'crb_attach_in_contact_form' );
@@ -277,7 +283,7 @@ function crb_attach_in_cfe_results() {
 add_action( 'after_setup_theme', 'crb_cfe_load' );
 function crb_cfe_load() {
 	if ( ! class_exists( 'Carbon_Fields\Carbon_Fields' ) ) {
-		require_once(CFE__PLUGIN_DIR . 'vendor/autoload.php' );
+		require_once( CFE__PLUGIN_DIR . 'vendor/autoload.php' );
 		\Carbon_Fields\Carbon_Fields::boot();
 	}
 }

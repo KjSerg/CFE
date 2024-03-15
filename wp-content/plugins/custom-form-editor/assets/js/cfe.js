@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     var $doc = jQuery(this);
-    if( $doc.find('.select_st').length > 0){
+    if ($doc.find('.select_st').length > 0) {
         $doc.find('.select_st').selectric({
             disableOnMobile: false,
             nativeOnMobile: false
@@ -95,29 +95,51 @@ jQuery(document).ready(function ($) {
             var formData = new FormData(thisForm);
             showPreloader();
             $.fancybox.close();
-            $.ajax({
+            var data = {
                 type: $form.attr('method'),
                 url: admin_ajax,
                 processData: false,
                 contentType: false,
                 data: formData,
-            }).done(function (r) {
-                $form.trigger('reset');
-                if (r) {
-                    if (isJsonString(r)) {
-                        var res = JSON.parse(r);
-                        if (res.msg !== '' && res.msg !== undefined) {
-                            showMassage(res.msg);
+            };
+            $form.trigger('reset');
+            if (typeof grecaptcha === 'undefined') {
+                sendRequest(data);
+            } else {
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(google_recaptcha_site_key, {action: 'submit'}).then(function (token) {
+                        var $token = $form.find('input.token');
+                        if ($token.length === 0) {
+                            $form.append('<input type="hidden" name="token" class="token" value="' + token + '">');
+                        } else {
+                            $token.val(token);
                         }
-                    } else {
-                        showMassage(r);
-                    }
-                }
-                hidePreloader();
-            });
+                        thisForm = document.getElementById(this_form);
+                        formData = new FormData(thisForm);
+                        data.data = formData;
+                        sendRequest(data);
+                    });
+                });
+            }
         }
     });
 });
+
+function sendRequest(data) {
+    $.ajax(data).done(function (r) {
+        if (r) {
+            if (isJsonString(r)) {
+                var res = JSON.parse(r);
+                if (res.msg !== '' && res.msg !== undefined) {
+                    showMassage(res.msg);
+                }
+            } else {
+                showMassage(r);
+            }
+        }
+        hidePreloader();
+    });
+}
 
 function validationInputs($form) {
     var obj = {};

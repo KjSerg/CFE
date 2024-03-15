@@ -44,7 +44,7 @@ function get_file_types_string() {
     ";
 }
 
-function send_message( $m, $emails = array(), $form_subject = 'Повідомлення із сайту' ) {
+function cfe_send_message( $m, $emails = array(), $form_subject = 'Повідомлення із сайту' ) {
 	$c            = true;
 	$message      = $m;
 	$project_name = get_bloginfo( 'name' );
@@ -114,4 +114,34 @@ function get_mail_html( $_id ) {
 	}
 
 	return "<table style='width: 100%;'>$message</table> ";;
+}
+
+
+function token_test( $token ) {
+	$google_recaptcha_secret_key = carbon_get_theme_option( 'google_recaptcha_secret_key' );
+	$secret_key                  = $google_recaptcha_secret_key;
+	$remote_ip                   = $_SERVER['REMOTE_ADDR'];
+
+	$url      = 'https://www.google.com/recaptcha/api/siteverify';
+	$data     = array(
+		'secret'   => $secret_key,
+		'response' => $token,
+		'remoteip' => $remote_ip
+	);
+	$options  = array(
+		'http' => array(
+			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			'method'  => 'POST',
+			'content' => http_build_query( $data )
+		)
+	);
+	$context  = stream_context_create( $options );
+	$response = file_get_contents( $url, false, $context );
+	$result   = json_decode( $response, true );
+
+	if ( $result['success'] ) {
+		return true;
+	}
+
+	return false;
 }

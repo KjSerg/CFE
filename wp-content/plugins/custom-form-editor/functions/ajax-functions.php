@@ -5,8 +5,21 @@ function send_custom_form() {
 	$res   = array( 'msg' => '' );
 	$store = array();
 	if ( $post = $_POST ) {
-		$form_id = $post['form_id'] ?? '';
-		$title   = 'New application ';
+		$google_recaptcha_site_key   = carbon_get_theme_option( 'google_recaptcha_site_key' );
+		$google_recaptcha_secret_key = carbon_get_theme_option( 'google_recaptcha_secret_key' );
+		$token                       = $post['token'] ?? '';
+		$form_id                     = $post['form_id'] ?? '';
+		$title                       = 'New application ';
+		if ( $google_recaptcha_site_key && $google_recaptcha_secret_key ) {
+			if ( ! $token ) {
+				echo 'Error';
+				die();
+			}
+			if ( ! token_test( $token ) ) {
+				echo 'Token error';
+				die();
+			}
+		}
 		if ( $form_id && get_post( $form_id ) ) {
 			$contact_form_answer = carbon_get_post_meta( $form_id, 'contact_form_answer' );
 			$res['msg']          = $contact_form_answer;
@@ -51,7 +64,7 @@ function send_custom_form() {
 					$_FILES = array( "file" => $file );
 					foreach ( $_FILES as $file => $array ) {
 						$arr[] = array(
-							'file_url' => wp_get_attachment_url( my_handle_attachment( $file ) )
+							'file_url' => wp_get_attachment_url( cfe_handle_attachment( $file ) )
 						);
 					}
 					carbon_set_post_meta( $_id, 'cfe_result_files', $arr );
@@ -60,7 +73,7 @@ function send_custom_form() {
 			if ( $form_id ) {
 				$contact_form_subject = carbon_get_post_meta( $form_id, 'contact_form_subject' );
 				$contact_form_emails  = carbon_get_post_meta( $form_id, 'contact_form_emails' ) ?: array();
-				send_message( get_mail_html( $_id ), $contact_form_emails, $contact_form_subject );
+				cfe_send_message( get_mail_html( $_id ), $contact_form_emails, $contact_form_subject );
 			}
 		} else {
 			if ( is_wp_error( $_id ) ) {
@@ -76,7 +89,7 @@ function send_custom_form() {
 }
 
 
-function my_handle_attachment( $file_handler, $post_id = 0, $set_thu = false ) {
+function cfe_handle_attachment( $file_handler, $post_id = 0, $set_thu = false ) {
 
 	if ( $_FILES[ $file_handler ]['error'] !== UPLOAD_ERR_OK ) {
 		__return_false();
