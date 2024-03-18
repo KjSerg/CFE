@@ -13,6 +13,12 @@ define( 'CFE__SITE_URL', site_url() );
 define( 'CFE__ASSETS_URL', CFE__SITE_URL . '/wp-content/plugins/custom-form-editor/assets' );
 define( 'CFE__PLUGIN_NAME', 'custom-form-editor' );
 
+function load_custom_form_editor_textdomain() {
+	load_plugin_textdomain( 'custom-form-editor', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'load_custom_form_editor_textdomain' );
+
+
 require_once( CFE__PLUGIN_DIR . 'functions/form-post-type.php' );
 require_once( CFE__PLUGIN_DIR . 'functions/form-short-code.php' );
 require_once( CFE__PLUGIN_DIR . 'functions/carbonfields-init.php' );

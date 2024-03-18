@@ -7,6 +7,23 @@ function crb_cfe_complex_field_header_template() {
 	return ob_get_clean();
 }
 
+function crb_cfe_complex_rows_header_template() {
+	ob_start();
+	echo esc_html__( 'row', 'custom-form-editor' )
+	?>
+    <%- $_index + 1 %>.
+	<?php
+	return ob_get_clean();
+}
+function crb_cfe_complex_column_header_template() {
+	ob_start();
+	echo esc_html__( 'column', 'custom-form-editor' )
+	?>
+    <%- $_index + 1 %>.
+	<?php
+	return ob_get_clean();
+}
+
 function get_association_items() {
 	$arr = array(
 		array(

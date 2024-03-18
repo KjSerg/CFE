@@ -25,3 +25,4 @@ function add_cfe_menu_bubble() {
 		}
 	}
 }
+
