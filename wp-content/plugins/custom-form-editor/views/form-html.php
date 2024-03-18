@@ -25,7 +25,8 @@ function get_form_html( $id ) {
 		?>
         <form action="<?php echo $ajax_url; ?>" method="post" novalidate=""
               id="custom-form-<?php echo $id ?>-<?php echo $shortcode_counter ?>"
-              class="custom-form-js custom-form-render" enctype="multipart/form-data">
+              class="custom-form-js custom-form-render <?php echo carbon_get_post_meta( $id, 'contact_form_css_class' ); ?>"
+              enctype="multipart/form-data">
             <input type="hidden" name="action" value="send_custom_form">
             <input type="hidden" name="form_id" value="<?php echo $id ?>">
 			<?php

@@ -7,7 +7,8 @@ add_action( 'admin_notices', function () {
 	}
 	$post_type = get_post_type( $post_id );
 	if ( $post_type === 'contact_form' ) {
-		echo '<div id="' . CFE__PLUGIN_NAME . '-short-code-notice" class="notice" style="">Short code: [custom-form id="' . $post_id . '"]</div>';
+		$code = "[custom-form id='$post_id']";
+		echo '<div id="' . CFE__PLUGIN_NAME . '-short-code-notice" class="notice cfe-short-code-info copy-on-click" data-value="' . $code . '" style="">Short code: ' . $code . '</div>';
 	}
 
 } );

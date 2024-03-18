@@ -1,12 +1,5 @@
-jQuery(document).ready(function ($) {
-    var $doc = jQuery(this);
-    if ($doc.find('.select_st').length > 0) {
-        $doc.find('.select_st').selectric({
-            disableOnMobile: false,
-            nativeOnMobile: false
-        });
-    }
-
+var $doc = jQuery(document);
+$doc.ready(function ($) {
     $doc.on('submit', '.custom-form-js', function (e) {
         e.preventDefault();
         var $form = $(this);
@@ -123,7 +116,39 @@ jQuery(document).ready(function ($) {
             }
         }
     });
+    selectInit();
+    telInit();
 });
+
+function selectInit() {
+    if ($doc.find('.select_st').length > 0) {
+        $doc.find('.select_st').selectric({
+            disableOnMobile: false,
+            nativeOnMobile: false
+        });
+    }
+}
+
+function telInit() {
+    $doc.find('.custom-form-render input[type="tel"]').each(function () {
+        var $input = $(this);
+        console.log($input)
+        $input.on('input', function (e) {
+            console.log(isNumberKey(e))
+            if (!isNumberKey(e)) {
+                e.preventDefault();
+                return;
+            }
+        })
+
+    });
+}
+
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    return !(charCode !== 43 && charCode > 31 && (charCode < 48 || charCode > 57));
+
+}
 
 function sendRequest(data) {
     $.ajax(data).done(function (r) {

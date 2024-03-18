@@ -4,3 +4,16 @@
 .required-fields-notice {
     /*display: none;*/
 }
+
+.copy-on-click {
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.copy-on-click.active {
+    border-left-color: #72aee6;
+    border-left-width: 10px;
+}
+.copy-on-click:hover {
+    transform: scale(1.01);
+}

@@ -14,7 +14,13 @@ function the_field( $field, $field_index ) {
 		the_file_field( $field, $field_ID );
 	} elseif ( $field_type == 'button' ) {
 		the_form_button( $field );
+	} elseif ( $field_type == 'html' ) {
+		the_html( $field );
 	}
+}
+
+function the_html( $field ) {
+	echo $field['html'] ?? '';
 }
 
 function the_text_field( $field, $field_ID ) {
@@ -74,10 +80,10 @@ function the_select( $field, $field_ID ) {
     >
 		<?php if ( $field_placeholder ): ?>
             <option disabled
-	            <?php if ( !$multiple ) {
-		            echo 'selected';
-	            } ?>
-                    >
+				<?php if ( ! $multiple ) {
+					echo 'selected';
+				} ?>
+            >
 				<?php echo $field_placeholder ?>
             </option>
 		<?php endif; ?>
@@ -196,9 +202,9 @@ function the_file_field( $field, $field_ID ) {
 				<?php if ( $multiple ) {
 					echo 'multiple';
 				} ?>
-	            <?php if ( $field['field_required'] ) {
-		            echo 'required="required"';
-	            } ?>
+				<?php if ( $field['field_required'] ) {
+					echo 'required="required"';
+				} ?>
                    accept="<?php echo $field['file_types']; ?>"
                    type="file">
             <span class="up_file_text">

@@ -1,4 +1,5 @@
 var requiredFields = [];
+
 jQuery(document).ready(function ($) {
     jQuery('#titlediv').append('<div id="required-fields-notice" class="notice notice-error" style="display: none;"></div>');
     jQuery(document).on('change', '.cf-container__fields input, .cf-container__fields select, .cf-container__fields textarea', checkRequiredFields);
@@ -9,9 +10,22 @@ jQuery(document).ready(function ($) {
             checkRequiredFields();
         }
     });
+    jQuery(document).on('click', '.copy-on-click', function (e) {
+        e.preventDefault();
+        var $t = jQuery(this);
+        var val = $t.attr('data-value');
+        if (val === undefined) $t.text();
+        var copytext = document.createElement('input');
+        copytext.value = val;
+        document.body.appendChild(copytext);
+        copytext.select();
+        document.execCommand('copy');
+        document.body.removeChild(copytext);
+        $(this).addClass('active');
+        alert('Copied!');
+    });
     setTimeout(checkRequiredFields, 1000);
 });
-
 
 function checkRequiredFields() {
     setRequiredFields();
@@ -20,7 +34,7 @@ function checkRequiredFields() {
         var $field = jQuery('#' + fieldName);
         var fieldValue = $field.val();
         var $wrapper = $field.closest('.cf-field').not('[hidden]');
-        if($wrapper.length > 0){
+        if ($wrapper.length > 0) {
             if ($field.hasClass('cf-media-gallery__browse')) {
                 fieldValue = $wrapper.find('.cf-media-gallery__item').length;
             }

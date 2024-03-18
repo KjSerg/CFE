@@ -24,9 +24,8 @@ require_once( CFE__PLUGIN_DIR . 'functions/settings.php' );
 require_once( CFE__PLUGIN_DIR . 'views/init.php' );
 
 add_action( 'admin_notices', function () {
-	echo '<div id="' . CFE__PLUGIN_NAME . '-notice" class="notice" style="">Custom Form Editor увімкнено</div>';
-	if ( class_exists( 'Carbon_Fields\Carbon_Fields' ) ) {
-		echo '<div id="' . CFE__PLUGIN_NAME . '-notice1" class="notice" style="">Carbon_Fields увімкнено</div>';
+	if ( !class_exists( 'Carbon_Fields\Carbon_Fields' ) ) {
+		echo '<div id="' . CFE__PLUGIN_NAME . '-notice1" class="notice" style="">Carbon_Fields not active</div>';
 	}
 } );
 

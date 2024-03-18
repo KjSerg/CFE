@@ -1,13 +1,4 @@
-.simple_text .custom-form-render .selectric-scroll ul li:before {
-    display: none;
-}
 
-
-.not-active {
-    pointer-events: none;
-    opacity: 0.6;
-    transition: 0.3s ease;
-}
 
 .cfe-preloader img {
     max-width: 100%;
@@ -45,15 +36,13 @@
     color: red;
 }
 
-.form-group.error  .selectric{
-    border-color: red!important;
+.form-group.error .selectric {
+    border-color: red !important;
 }
 
 .btn_st {
     display: inline-block;
     background: #014433;
-    -webkit-border-radius: 4rem;
-    border-radius: 4rem;
     font-weight: 500;
     font-family: Montserrat;
     color: #fff;
@@ -141,8 +130,6 @@
 .switch_st span:before {
     width: 2rem;
     height: 2rem;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
     background: #FFF;
     -webkit-transition: .4s;
     -o-transition: .4s;
@@ -329,8 +316,8 @@ textarea {
     border-color: transparent
 }
 
-.check_st:checked ~ i {
-    color: #1A1B1F !important
+.custom-form-render .check_st:checked ~ i {
+    color: #6D6D6D !important
 }
 
 .filter-check__item {
@@ -341,11 +328,11 @@ textarea {
     margin-bottom: 0
 }
 
-.check-item {
+.custom-form-render .check-item {
     display: -ms-flexbox
 }
 
-.check-item {
+.custom-form-render .check-item {
     display: -webkit-flex;
     display: flex;
     -webkit-box-pack: start;
@@ -355,10 +342,10 @@ textarea {
     -webkit-flex-flow: row wrap;
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align:start;
+    align-items: flex-start;
     cursor: pointer
 }
 
@@ -453,15 +440,42 @@ textarea {
 }
 
 
+.two-thirds, .form-horizontal > .two-thirds {
+    width: -webkit-calc(66% - 1.6rem);
+    width: calc(66% - 1.6rem);
+}
+
+.three-quarters, .form-horizontal > .three-quarters {
+    width: -webkit-calc(75% - 1.6rem);
+    width: calc(75% - 1.6rem);
+}
+
+.form-horizontal .btn_st{
+    width: 100%;
+}
+
+
+.simple_text .custom-form-render .selectric-scroll ul li:before {
+    display: none;
+}
+
+
+.not-active {
+    pointer-events: none;
+    opacity: 0.6;
+    transition: 0.3s ease;
+}
+
+
 @media (max-width: 767px) {
-    .form-horizontal > .quarter {
+    .form-horizontal > .quarter, .form-horizontal > .three-quarters, .form-horizontal > .two-thirds {
         width: -webkit-calc(50% - 1.6rem);
         width: calc(50% - 1.6rem)
     }
 }
 
 @media (max-width: 600px) {
-    .form-horizontal > .third {
+    .form-horizontal > .third, .form-horizontal > .two-thirds {
         width: -webkit-calc(100% - 1.6rem);
         width: calc(100% - 1.6rem)
     }
@@ -471,7 +485,9 @@ textarea {
 
     .form-horizontal > .half,
     .form-horizontal > .quarter,
-    .form-horizontal > .third {
+    .form-horizontal > .third,
+    .form-horizontal > .three-quarters,
+    .form-horizontal > .two-thirds {
         width: -webkit-calc(100% - 1.6rem);
         width: calc(100% - 1.6rem)
     }

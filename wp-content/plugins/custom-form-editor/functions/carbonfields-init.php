@@ -56,7 +56,7 @@ function crb_attach_in_contact_form() {
 	$association_items = get_association_items();
 	Container::make( 'post_meta', 'Form body' )
 	         ->show_on_post_type( 'contact_form' )
-	         ->add_fields(
+	         ->add_tab( 'Form body',
 		         array(
 			         Field::make( "complex", "contact_form_rows", "Rows" )
 			              ->setup_labels( $label_rows )
@@ -74,10 +74,12 @@ function crb_attach_in_contact_form() {
 							                   Field::make( 'select', 'column_width', __( 'Column width' ) )
 							                        ->set_required( true )
 							                        ->set_options( array(
-								                        'full'    => '100%',
-								                        'half'    => '50%',
-								                        'third'   => '33%',
-								                        'quarter' => '25%',
+								                        'full'           => '100%',
+								                        'half'           => '50%',
+								                        'third'          => '33%',
+								                        'quarter'        => '25%',
+								                        'three-quarters' => '75%',
+								                        'two-thirds'     => '66%',
 							                        ) ),
 							                   Field::make( "complex", "field", 'Field' )
 							                        ->setup_labels( $label_fields )->set_max( 1 )
@@ -222,6 +224,11 @@ function crb_attach_in_contact_form() {
 									                        Field::make( "text", "button_css_class" ),
 								                        )
 							                        )
+							                        ->add_fields( 'html', 'Custom HTML',
+								                        array(
+									                        Field::make( "textarea", "html" ),
+								                        )
+							                        )
 						                   )
 					                   )
 					                   ->set_header_template( 'Column <%- $_index + 1 %>' )
@@ -230,6 +237,11 @@ function crb_attach_in_contact_form() {
 			              ->set_header_template( '
 			                        Row <%- $_index + 1 %>
 			                    ' )
+		         )
+	         )
+	         ->add_tab( 'Settings',
+		         array(
+			         Field::make( "text", "contact_form_css_class" ),
 		         )
 	         );
 	Container::make( 'post_meta', 'Answer' )
