@@ -1,12 +1,51 @@
 <?php
 /*
 Plugin Name: Custom Form Editor
-Description: Візуальний редактор форм на основі carbonfields
+Description: Візуальний редактор форм на основі carbonfields. Відкритий код для кращої кстомізації стилів і HTML.
 Version: 1.1
 Author: Каланджій Сергій
 Author URI: https://web-mosaica.art/
 Plugin URI: https://github.com/KjSerg/contacts-form-editor
+Requires at least: 6.0
+Requires PHP: 8.0
+Tested up to: 6.5
+Text Domain: custom-form-editor
+Domain Path: /languages
 */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$cfe_min_php_version = '8.0';
+$cfe_min_wp_version  = '6.0';
+if ( version_compare( PHP_VERSION, $cfe_min_php_version, '<' ) ) {
+	add_action( 'admin_notices', function () use ( $cfe_min_php_version ) {
+		$message = sprintf(
+			esc_html__( 'Plugin "Custom Form Editor" requires PHP version %1$s or newer. Your current version is %2$s. The plugin has been deactivated.', 'custom-form-editor' ),
+			$cfe_min_php_version,
+			PHP_VERSION
+		);
+		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+	} );
+
+	return;
+}
+global $wp_version;
+if ( version_compare( $wp_version, $cfe_min_wp_version, '<' ) ) {
+	add_action( 'admin_notices', function () use ( $cfe_min_wp_version, $wp_version ) {
+		$message = sprintf(
+			esc_html__( 'Plugin "Custom Form Editor" requires WordPress version %1$s or newer. Your current version is %2$s. The plugin has been deactivated.', 'custom-form-editor' ),
+			$cfe_min_wp_version,
+			$wp_version
+		);
+		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+	} );
+
+	return;
+}
 
 define( 'CFE__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CFE__SITE_URL', site_url() );
