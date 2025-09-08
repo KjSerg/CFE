@@ -141,7 +141,7 @@ class Ajax {
 					$_FILES = array( "file" => $file );
 					foreach ( $_FILES as $file => $array ) {
 						$arr[] = array(
-							'file_url' => wp_get_attachment_url( cfe_handle_attachment( $file ) )
+							'file_url' => wp_get_attachment_url( $this->cfe_handle_attachment( $file ) )
 						);
 					}
 					carbon_set_post_meta( $_id, 'cfe_result_files', $arr );
