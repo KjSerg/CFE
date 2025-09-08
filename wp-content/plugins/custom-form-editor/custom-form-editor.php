@@ -11,6 +11,8 @@ Requires PHP: 8.0
 Tested up to: 6.5
 Text Domain: custom-form-editor
 Domain Path: /languages
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
