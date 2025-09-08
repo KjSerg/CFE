@@ -3,8 +3,9 @@ var requiredFields = [];
 jQuery(document).ready(function ($) {
     jQuery('#titlediv').append('<div id="required-fields-notice" class="notice notice-error" style="display: none;"></div>');
     jQuery(document).on('change', '.cf-container__fields input, .cf-container__fields select, .cf-container__fields textarea', checkRequiredFields);
-    jQuery(document).on('input', '.cf-container__fields input, .cf-container__fields textarea', checkRequiredFields);
+    jQuery(document).on('input keypress', '.cf-container__fields input, .cf-container__fields textarea', checkRequiredFields);
     jQuery(document).on('click', '.cf-complex__inserter-button, .cf-complex__group-action, .cf-media-gallery__item-remove, .cf-complex__tabs-item', checkRequiredFields);
+    jQuery(document).on('click', '.cf-association__option-action', checkRequiredFields);
     jQuery(document).on('click', function (e) {
         if (jQuery(e.target).hasClass('media-button-select')) {
             checkRequiredFields();
@@ -24,7 +25,7 @@ jQuery(document).ready(function ($) {
         $(this).addClass('active');
         alert('Copied!');
     });
-    setTimeout(checkRequiredFields, 1000);
+    setTimeout(checkRequiredFields, 2000);
 });
 
 function checkRequiredFields() {
@@ -39,6 +40,7 @@ function checkRequiredFields() {
                 fieldValue = $wrapper.find('.cf-media-gallery__item').length;
             }
             if (!fieldValue) {
+                // console.log($field)
                 var $wrapperGroup = $field.closest('.cf-complex__group');
                 var title = $wrapper.find('.cf-field__label').text();
                 title = '<strong>' + title + '</strong>';
@@ -71,16 +73,24 @@ function setRequiredFields() {
     requiredFields = [];
     jQuery(document).find('.cf-field__asterisk').each(function (index) {
         var $t = jQuery(this);
-        var $wrapper = $t.closest('.cf-field');
-        var $field = $wrapper.find('textarea').eq(0);
+        var $wrapper = $t.closest('.cf-field').find('> .cf-field__body').eq(0);
+        console.log($wrapper.find('> .cf-field__body').eq(0))
+        var $field =  $wrapper.find('.cf-textarea__input').eq(0);
+        if ($field.length === 0) $field = $wrapper.find(' > .wp-editor-wrap .regular-text').eq(0);
+        if ($field.length === 0) $field = $wrapper.find('select').eq(0);
         if ($field.length === 0) {
-            $field = $wrapper.find('select').eq(0);
-        }
-        if ($field.length === 0) {
-            $field = $wrapper.find('input').eq(0);
+            $field = $wrapper.find('.cf-text__input').eq(0);
         }
         if ($field.length === 0) {
             $field = $wrapper.find('.cf-media-gallery__browse').eq(0);
+        }
+        if ($field.length === 0) {
+            var $associations = $wrapper.find('> .cf-association__cols').eq(0).find('.cf-association__col').eq(1).find('input');
+            if($associations.length === 0){
+                var fieldAssociationsID = $wrapper.closest('.cf-association').attr('id');
+                if (fieldAssociationsID === undefined) $wrapper.closest('.cf-association').attr('id', 'required-field-' + index);
+                requiredFields.push(fieldAssociationsID);
+            }
         }
         if ($field.length > 0) {
             var fieldID = $field.attr('id');
