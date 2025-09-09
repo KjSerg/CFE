@@ -5,7 +5,7 @@ Description: Візуальний редактор форм на основі ca
 Version: 1.1
 Author: Каланджій Сергій
 Author URI: https://web-mosaica.art/
-Plugin URI: https://github.com/KjSerg/contacts-form-editor
+Plugin URI: https://github.com/KjSerg/CFE/tree/main/wp-content/plugins/custom-form-editor
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.5

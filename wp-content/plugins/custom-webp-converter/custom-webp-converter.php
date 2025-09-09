@@ -4,8 +4,8 @@ Plugin Name: Custom WebP Converter
 Description: Converts downloaded images to webp
 Version: 1.0
 Author: Каланджій Сергій
-Author URI: https://web-mosaica.art/
-Plugin URI: https://github.com/KjSerg/
+Author URI: https://github.com/KjSerg/
+Plugin URI: https://github.com/KjSerg/CFE/tree/main/wp-content/plugins/custom-webp-converter
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.5
