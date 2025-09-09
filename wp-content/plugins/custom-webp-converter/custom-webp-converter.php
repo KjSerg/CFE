@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Custom WebP Converter
-Description: Converts downloaded images to webp
+Description: Converts downloaded images to webp. Plugin "Custom WebP Converter" requires the GD library with WebP support to be enabled on your server.
 Version: 1.0
 Author: Каланджій Сергій
 Author URI: https://github.com/KjSerg/
