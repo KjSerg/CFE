@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Custom WebP Converter
-Description: Converts downloaded images to webp. Plugin "Custom WebP Converter" requires the GD library with WebP support to be enabled on your server.
+Description: Converts uploaded images to webp format and does not create copies, i.e. saves server memory. The "Custom WebP Converter" plugin requires that the GD library with WebP support is enabled on your server.
 Version: 1.0
 Author: Каланджій Сергій
 Author URI: https://github.com/KjSerg/
@@ -30,6 +30,7 @@ if ( version_compare( PHP_VERSION, $cwc_min_php_version, '<' ) ) {
 		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} );
+
 	return;
 }
 
@@ -46,6 +47,7 @@ if ( version_compare( $wp_version, $cwc_min_wp_version, '<' ) ) {
 		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} );
+
 	return;
 }
 
@@ -60,14 +62,17 @@ if ( ! function_exists( 'imagewebp' ) ) {
 		printf( '<div class="notice notice-error"><p>%s</p></div>', wp_kses_post( $message ) );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	} );
+
 	return;
 }
 // <-- КІНЕЦЬ НОВОЇ ПЕРЕВІРКИ -->
 
 
 define( 'CWC__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'CWC__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'CWC__SITE_URL', site_url() );
 define( 'CWC__PLUGIN_NAME', 'custom-webp-converter' );
-
+define( 'CWC_MAX_PIXEL_THRESHOLD', 35000000 );
 // Підключення основного файлу ініціалізації
 require_once( CWC__PLUGIN_DIR . 'Initializer.php' );
+require_once( CWC__PLUGIN_DIR . 'enqueue_scripts.php' );
